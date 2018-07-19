@@ -670,33 +670,35 @@ All default logstash patterns are supported, these can be viewed here:
 https://github.com/logstash-plugins/logstash-patterns-core/blob/master/patterns/grok-patterns
 
 Available modifiers:
-   string   (default if nothing is specified)
-   int
-   float
-   duration (ie, 5.23ms gets converted to int nanoseconds)
-   tag      (converts the field into a tag)
-   drop     (drops the field completely)
+   - string   (default if nothing is specified)
+   - int
+   - float
+   - duration (ie, 5.23ms gets converted to int nanoseconds)
+   - tag      (converts the field into a tag)
+   - drop     (drops the field completely)
 Timestamp modifiers:
-   ts-ansic         ("Mon Jan _2 15:04:05 2006")
-   ts-unix          ("Mon Jan _2 15:04:05 MST 2006")
-   ts-ruby          ("Mon Jan 02 15:04:05 -0700 2006")
-   ts-rfc822        ("02 Jan 06 15:04 MST")
-   ts-rfc822z       ("02 Jan 06 15:04 -0700")
-   ts-rfc850        ("Monday, 02-Jan-06 15:04:05 MST")
-   ts-rfc1123       ("Mon, 02 Jan 2006 15:04:05 MST")
-   ts-rfc1123z      ("Mon, 02 Jan 2006 15:04:05 -0700")
-   ts-rfc3339       ("2006-01-02T15:04:05Z07:00")
-   ts-rfc3339nano   ("2006-01-02T15:04:05.999999999Z07:00")
-   ts-httpd         ("02/Jan/2006:15:04:05 -0700")
-   ts-epoch         (seconds since unix epoch)
-   ts-epochnano     (nanoseconds since unix epoch)
-   ts-"CUSTOM"
+   - ts-ansic         ("Mon Jan _2 15:04:05 2006")
+   - ts-unix          ("Mon Jan _2 15:04:05 MST 2006")
+   - ts-ruby          ("Mon Jan 02 15:04:05 -0700 2006")
+   - ts-rfc822        ("02 Jan 06 15:04 MST")
+   - ts-rfc822z       ("02 Jan 06 15:04 -0700")
+   - ts-rfc850        ("Monday, 02-Jan-06 15:04:05 MST")
+   - ts-rfc1123       ("Mon, 02 Jan 2006 15:04:05 MST")
+   - ts-rfc1123z      ("Mon, 02 Jan 2006 15:04:05 -0700")
+   - ts-rfc3339       ("2006-01-02T15:04:05Z07:00")
+   - ts-rfc3339nano   ("2006-01-02T15:04:05.999999999Z07:00")
+   - ts-httpd         ("02/Jan/2006:15:04:05 -0700")
+   - ts-epoch         (seconds since unix epoch)
+   - ts-epochnano     (nanoseconds since unix epoch)
+   - ts-"CUSTOM"
+
 CUSTOM time layouts must be within quotes and be the representation of the
 "reference time", which is Mon Jan 2 15:04:05 -0700 MST 2006
 See https://golang.org/pkg/time/#Parse for more details.
 
 Example log file pattern, example log looks like this:
    `[04/Jun/2016:12:41:45 +0100] 1.25 200 192.168.1.1 5.432µs`
+
 Breakdown of the DURATION pattern below:
    NUMBER  is a builtin logstash grok pattern matching float & int numbers.
    [nuµm]? is a regex specifying 0 or 1 of the characters within brackets.
@@ -718,7 +720,7 @@ Wider-ranging client IP matching
 `CLIENT (?:%{IPORHOST}|%{HOSTPORT}|::1)`
 
 
-# COMMON LOG PATTERNS
+COMMON LOG PATTERNS:
 
 apache & nginx logs, this is also known as the "common log format"
 see https://en.wikipedia.org/wiki/Common_Log_Format
@@ -731,7 +733,7 @@ of two quoted strings at the end for "referrer" and "agent"
 See Examples at http://httpd.apache.org/docs/current/mod/mod_log_config.html
 `COMBINED_LOG_FORMAT %{COMMON_LOG_FORMAT} %{QS:referrer} %{QS:agent}`
 
-# HTTPD log formats
+HTTPD log formats:
 ```
 HTTPD20_ERRORLOG \[%{HTTPDERROR_DATE:timestamp}\] \[%{LOGLEVEL:loglevel:tag}\] (?:\[client %{IPORHOST:clientip}\] ){0,1}%{GREEDYDATA:errormsg}
 HTTPD24_ERRORLOG \[%{HTTPDERROR_DATE:timestamp}\] \[%{WORD:module}:%{LOGLEVEL:loglevel:tag}\] \[pid %{POSINT:pid:int}:tid %{NUMBER:tid:int}\]( \(%{POSINT:proxy_errorcode:int}\)%{DATA:proxy_errormessage}:)?( \[client %{IPORHOST:client}:%{POSINT:clientport}\])? %{DATA:errorcode}: %{GREEDYDATA:message}
