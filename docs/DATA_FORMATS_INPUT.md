@@ -676,6 +676,7 @@ Available modifiers:
    - duration (ie, 5.23ms gets converted to int nanoseconds)
    - tag      (converts the field into a tag)
    - drop     (drops the field completely)
+   
 Timestamp modifiers:
    - ts-ansic         ("Mon Jan _2 15:04:05 2006")
    - ts-unix          ("Mon Jan _2 15:04:05 MST 2006")
@@ -693,7 +694,7 @@ Timestamp modifiers:
    - ts-"CUSTOM"
 
 CUSTOM time layouts must be within quotes and be the representation of the
-"reference time", which is Mon Jan 2 15:04:05 -0700 MST 2006
+"reference time", which is `Mon Jan 2 15:04:05 -0700 MST 2006`
 See https://golang.org/pkg/time/#Parse for more details.
 
 Example log file pattern, example log looks like this:
