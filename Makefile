@@ -17,10 +17,8 @@ BUILDFLAGS ?=
 
 ifdef GOBIN
 PATH := $(GOBIN):$(PATH)
-else ifdef GOPATH
-PATH := $(subst :,/bin:,$(GOPATH))/bin:$(PATH)
 else
-PATH := $(HOME)/go/bin:$(PATH)
+PATH := $(subst :,/bin:,$(shell go env GOPATH))/bin:$(PATH)
 endif
 
 LDFLAGS := $(LDFLAGS) -X main.commit=$(COMMIT) -X main.branch=$(BRANCH)
@@ -33,8 +31,6 @@ all:
 	$(MAKE) telegraf
 
 deps:
-	go get -u github.com/golang/lint/golint
-	go get -u github.com/golang/dep/cmd/dep
 	dep ensure -vendor-only
 
 telegraf:
