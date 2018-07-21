@@ -35,13 +35,6 @@ jobs:
           at: '/go/src'
       - run: 'make check'
       - run: 'make test'
-  test-go-1.9-386:
-    <<: [ *defaults, *go-1_9 ]
-    steps:
-      - attach_workspace:
-          at: '/go/src'
-      - run: 'GOARCH=386 make check'
-      - run: 'GOARCH=386 make test'
   test-go-1.10:
     <<: [ *defaults, *go-1_10 ]
     steps:
@@ -84,9 +77,6 @@ workflows:
       - 'test-go-1.9':
           requires:
             - 'deps'
-      - 'test-go-1.9-386':
-          requires:
-            - 'deps'
       - 'test-go-1.10':
           requires:
             - 'deps'
@@ -96,16 +86,12 @@ workflows:
       - 'release':
           requires:
             - 'test-go-1.9'
-            - 'test-go-1.9-386'
             - 'test-go-1.10'
             - 'test-go-1.10-386'
   nightly:
     jobs:
       - 'deps'
       - 'test-go-1.9':
-          requires:
-            - 'deps'
-      - 'test-go-1.9-386':
           requires:
             - 'deps'
       - 'test-go-1.10':
@@ -117,7 +103,6 @@ workflows:
       - 'nightly':
           requires:
             - 'test-go-1.9'
-            - 'test-go-1.9-386'
             - 'test-go-1.10'
             - 'test-go-1.10-386'
     triggers:
