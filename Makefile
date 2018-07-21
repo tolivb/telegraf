@@ -28,8 +28,8 @@ endif
 
 .PHONY: all
 all:
-	$(MAKE) deps
-	$(MAKE) telegraf
+	@$(MAKE) --no-print-directory deps
+	@$(MAKE) --no-print-directory telegraf
 
 .PHONY: ensure
 deps:
