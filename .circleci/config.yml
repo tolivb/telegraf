@@ -4,10 +4,10 @@ defaults:
     working_directory: '/go/src/github.com/influxdata/telegraf'
   go-1_9: &go-1_9
     docker:
-      - image: 'circleci/golang:1.9.7'
+      - image: 'danielnelson/telegraf-circleci:1.9.7'
   go-1_10: &go-1_10
     docker:
-      - image: 'circleci/golang:1.10.3'
+      - image: 'danielnelson/telegraf-circleci:1.10.3'
 
 version: 2
 jobs:
@@ -17,7 +17,6 @@ jobs:
       - checkout
       - restore_cache:
           key: vendor-{{ checksum "Gopkg.lock" }}
-      - run: './scripts/getdep'
       - run: 'make deps'
       - save_cache:
           name: 'vendored deps'
