@@ -1,0 +1,26 @@
+FROM golang:1.10.3
+
+# Set timezone to UTC by default
+RUN ln -sf /usr/share/zoneinfo/Etc/UTC /etc/localtime
+
+RUN locale-gen C.UTF-8 || true
+ENV LANG=C.UTF-8
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt update && apt install -y \
+	git \
+	make \
+	python-boto \
+	ruby \
+	ruby-dev \
+	autoconf \
+	libtool && \
+	rm -rf /var/lib/apt/lists/*
+
+RUN gem install fpm
+
+RUN go -d github.com/golang/dep && \
+    cd src/github.com/golang/dep && \
+    git checkout -q v0.4.1 && \
+    go install -ldflags="-X main.version=v0.4.1" ./cmd/dep
