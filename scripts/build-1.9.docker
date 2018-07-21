@@ -9,13 +9,14 @@ ENV LANG=C.UTF-8
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt update && apt install -y \
+	autoconf \
 	git \
+	libtool \
+	locales \
 	make \
 	python-boto \
 	ruby \
-	ruby-dev \
-	autoconf \
-	libtool && \
+	ruby-dev && \
 	rm -rf /var/lib/apt/lists/*
 
 RUN gem install fpm
