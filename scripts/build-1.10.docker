@@ -1,14 +1,10 @@
 FROM golang:1.10.3
 
-# Set timezone to UTC by default
-RUN ln -sf /usr/share/zoneinfo/Etc/UTC /etc/localtime
-
-RUN locale-gen C.UTF-8 || true
-ENV LANG=C.UTF-8
+RUN chmod -R 755 "$GOPATH"
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt update && apt install -y \
+RUN apt update && apt install -y --no-install-recommends \
 	autoconf \
 	git \
 	libtool \
@@ -18,6 +14,10 @@ RUN apt update && apt install -y \
 	ruby \
 	ruby-dev && \
 	rm -rf /var/lib/apt/lists/*
+
+RUN ln -sf /usr/share/zoneinfo/Etc/UTC /etc/localtime
+RUN locale-gen C.UTF-8 || true
+ENV LANG=C.UTF-8
 
 RUN gem install fpm
 
