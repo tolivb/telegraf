@@ -2,9 +2,8 @@ FROM golang:1.10.3
 
 RUN chmod -R 755 "$GOPATH"
 
-ENV DEBIAN_FRONTEND=noninteractive
-
-RUN apt update && apt install -y --no-install-recommends \
+RUN DEBIAN_FRONTEND=noninteractive \
+	apt update && apt install -y --no-install-recommends \
 	autoconf \
 	git \
 	libtool \
