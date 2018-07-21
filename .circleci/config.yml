@@ -17,6 +17,7 @@ jobs:
       - checkout
       - restore_cache:
           key: vendor-{{ checksum "Gopkg.lock" }}
+      - run: './scripts/getdep'
       - run: 'make deps'
       - save_cache:
           name: 'vendored deps'
